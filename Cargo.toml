@@ -1,0 +1,47 @@
+[package]
+name = "computer-v1"
+version = "0.1.0"
+description = ""
+authors = [
+    "adjivas <adjivas@users.noreply.github.com>",
+]
+readme = "README.md"
+license = "MIT OR Apache-2.0"
+documentation = "http://adjivas.github.io/computer-v1/computer-v1"
+repository = "https://github.com/adjivas/computer-v1.git"
+homepage = "https://github.com/adjivas/computer-v1"
+keywords = []
+categories = ["visualization"]
+
+[badges]
+travis-ci = { repository = "adjivas/computer-v1", branch = "master" }
+appveyor = { repository = "adjivas/computer-v1", branch = "master", service = "github" }
+
+[[bin]]
+name = "computer_v1"
+doc  = false
+test = false
+
+[lib]
+test = false
+doctest = true
+
+[features]
+default       = []
+implem        = []
+fn-emilgardis = []
+lints         = ["clippy", "nightly"]
+nightly       = [] # for building with nightly and unstable features
+unstable      = [] # for building with unstable features on stable Rust
+debug         = [] # for building with debug messages
+travis        = ["lints", "nightly"] # for building with travis-cargo
+
+[dependencies.num]
+version = "0.1"
+
+[dependencies.itertools]
+version = "0.6"
+
+[dependencies.clippy]
+version = "0"
+optional = true
