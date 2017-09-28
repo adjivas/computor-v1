@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Loading Rust code</title>
+    <link rel="stylesheet" href="" />
+  </head>
+  <body>
+    <script type='text/javascript'>
+      var Module = {};
+
+      fetch('deps/computer_v1-4f80cb6e1d2f9d24.wasm').then(response =>
+          response.arrayBuffer()
+          ).then(buffer => {
+
+        Module.wasmBinary = buffer;
+
+        var script = document.createElement('script');
+        script.src = "computer_v1.js";
+        script.onload = function() {
+          console.log("Emscripten boilerplate loaded.")
+        }
+        document.body.appendChild(script);
+      });
+    </script>
+  </body>
+</html>

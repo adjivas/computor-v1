@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["polynomial","The module `polynomial` is a overload of `Order`'s interface. This module `polynomial` is a overload of `Order`'s interface."],["prelude","The module `prelude` is for public. This module is a public interface."]]});
