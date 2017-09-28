@@ -25,4 +25,10 @@ bench:
 doc:
 	$(CARGO) $(CARGO_OPTS) doc
 
+asmjs:
+	$(CARGO) build --target asmjs-unknown-emscripten --release
+
+wasm:
+	$(CARGO) build --target wasm32-unknown-emscripten --release
+
 .PHONY: all build clean check test bench doc

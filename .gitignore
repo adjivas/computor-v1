@@ -16,3 +16,4 @@ Cargo.lock
 # Swap
 *.rs.swp
 *.swp
+*.swo

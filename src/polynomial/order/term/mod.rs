@@ -1,3 +1,11 @@
+// @adjivas - github.com/adjivas. See the LICENSE
+// file at the top-level directory of this distribution and at
+// https://github.com/adjivas/computor-v1
+//
+// This file may not be copied, modified, or distributed
+
+//! This module `Term`'s definition.
+
 pub mod degree;
 
 use self::degree::Degree;
@@ -145,8 +153,8 @@ impl num2::Zero for Term {
 
     fn is_zero(&self) -> bool {
         match self {
-            &Term::Determinate(0.0) => true,
-            &Term::Indeterminate(0.0, _) => true,
+            &Term::Determinate(number) if number.eq(&f64::zero()) => true,
+            &Term::Indeterminate(number, _) if number.eq(&f64::zero()) => true,
             _ => false,
         }
     }

@@ -1,3 +1,11 @@
+// @adjivas - github.com/adjivas. See the LICENSE
+// file at the top-level directory of this distribution and at
+// https://github.com/adjivas/computor-v1
+//
+// This file may not be copied, modified, or distributed
+
+//! This module `polynomial` is a overload of `Order`'s interface.
+
 pub mod order;
 pub mod non_zero_constant;
 pub mod linear;
@@ -19,6 +27,9 @@ use ::num2;
 
 use ops::{Not, Neg, Mul, Div, Sub, Add, BitAnd};
 
+use num2::Zero;
+
+/// The Polynomial is a overload of `Order`'s interface.
 #[derive(Debug, Clone)]
 pub struct Polynomial(Order);
 
@@ -51,8 +62,8 @@ impl Polynomial {
             &[Term::Indeterminate(a, _),
               Term::Determinate(b)] => {
                 match (a, b) {
-                    (0.0, 0.0) => Some(Linear::SolubleEverywhere),
-                    (0.0, _) => Some(Linear::Unsoluble),
+                    ab if ab.eq(&(f64::zero(), f64::zero())) => Some(Linear::SolubleEverywhere),
+                    (a, _) if a.eq(&f64::zero()) => Some(Linear::Unsoluble),
                     (a, b) => Some(Linear::Soluble(b.neg().div(a))),
                 }
             }
@@ -66,8 +77,8 @@ impl Polynomial {
               Term::Indeterminate(b, Degree(1)),
               Term::Determinate(c)] if a != 0f64 => {
                 match num2::pow::pow(b, 2).sub(a.mul(c).mul(4.0)) {
-                    delta if delta < 0.0 => Some(Quadratic::Negative(a, b)),
-                    delta if delta > 0.0 => Some(Quadratic::Positive(delta.sqrt().sub(b).div(a.mul(2.0)),
+                    delta if delta < f64::zero() => Some(Quadratic::Negative(a, b)),
+                    delta if delta > f64::zero() => Some(Quadratic::Positive(delta.sqrt().sub(b).div(a.mul(2.0)),
                                                                      delta.sqrt().add(b).neg().div(a.mul(2.0)))),
                     _ => Some(Quadratic::Null(b.neg().div(a.mul(2.0)))),
                 }
@@ -97,7 +108,7 @@ impl fmt::Display for Polynomial {
         match self.0.as_slice() {
             &[Term::Indeterminate(a, Degree(2)),
               Term::Indeterminate(b, Degree(1)),
-              Term::Determinate(c)] if a != 0f64 => {
+              Term::Determinate(c)] if a.ne(&f64::zero()) => {
                 try!(write!(f, "Polynomial degree: 2\n"));
                 let delta = num2::pow::pow(b, 2).sub(a.mul(c).mul(4.0));
                 try!(write!(f, "Delta: b^2-4ac={b}^2-4*{a}*{c}={d}\n",
@@ -106,7 +117,7 @@ impl fmt::Display for Polynomial {
                                 c = c,
                                 d = delta));
                 match delta {
-                    delta if delta < 0.0 => { 
+                    delta if delta < f64::zero() => { 
                         write!(f, "Discriminant is strictly negative, the two complex solutions are:\n\
                                    (-b+sqrt(|delta|))/(a*2)=({b}+i*sqrt(|{d}|))/({a}*2)\n\
                                    (-b-sqrt(|delta|))/(a*2)=({b}-i*sqrt(|{d}|))/({a}*2)\n",
@@ -114,7 +125,7 @@ impl fmt::Display for Polynomial {
                                    b = b.neg(),
                                    d = delta)
                     },
-                    delta if delta > 0.0 => {
+                    delta if delta > f64::zero() => {
                         write!(f, "Discriminant is strictly positive, the two real solutions are:\n\
                                    (-b+sqrt(delta))/(a*2)=({b}+sqrt({d}))/({a}*2)={x1}\n\
                                    (-b-sqrt(delta))/(a*2)=({b}-sqrt({d}))/({a}*2)={x2}\n",
@@ -137,8 +148,8 @@ impl fmt::Display for Polynomial {
               Term::Determinate(b)] => {
                 try!(write!(f, "Polynomial degree: 1\n"));
                 match (a, b) {
-                    (0.0, 0.0) => write!(f, "All the real number are solutions.\n"), 
-                    (0.0, _) => write!(f, "There isn't any solution.\n"), 
+                    ab if ab.eq(&(f64::zero(), f64::zero())) => write!(f, "All the real number are solutions.\n"), 
+                    (a, _) if a.eq(&f64::zero()) => write!(f, "There isn't any solution.\n"), 
                     (a, b) => write!(f, "The solution is:\n\
                                          -a/b=-{b}/{a}={x}\n",
                                           b = b,

@@ -1,3 +1,11 @@
+// @adjivas - github.com/adjivas. See the LICENSE
+// file at the top-level directory of this distribution and at
+// https://github.com/adjivas/computor-v1
+//
+// This file may not be copied, modified, or distributed
+
+//! This module `Degree`'s definition.
+
 use ::fmt;
 use ::str;
 use ::num;
